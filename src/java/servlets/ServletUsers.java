@@ -7,6 +7,7 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.Principal;
 import java.util.Collection;
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -15,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import utilisateurs.gestionnaires.GestionnaireUtilisateurs;
 import utilisateurs.modeles.Utilisateur;
 
@@ -43,17 +45,19 @@ public class ServletUsers extends HttpServlet {
         String action = request.getParameter("action");
         String forwardTo = "";
         String message = "";
-
+        
         String log = request.getParameter("login");
         String nom = request.getParameter("nom");
         String prenom = request.getParameter("prenom");
-
+        String password = request.getParameter("password");
         if (action != null) {
             if (action.equals("listerLesUtilisateurs")) {
+               
                 Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();
                 request.setAttribute("listeDesUsers", liste);
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";
                 message = "Liste des utilisateurs";
+
             } else if (action.equals("creerUtilisateursDeTest")) {
                 gestionnaireUtilisateurs.creerUtilisateursDeTest();
                 Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();
@@ -61,11 +65,12 @@ public class ServletUsers extends HttpServlet {
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";
                 message = "Liste des utilisateurs";
             } else if (action.equals("creerUnUtilisateur")) {
-                gestionnaireUtilisateurs.creeUnUtilisateur(nom, prenom, log);
+                gestionnaireUtilisateurs.creeUnUtilisateur(nom, prenom, log, password);
                 Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();
                 request.setAttribute("listeDesUsers", liste);
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";
                 message = "Liste des utilisateurs";
+            
             } else if (action.equals("chercherParLogin")) {
                 Collection<Utilisateur> liste = gestionnaireUtilisateurs.chercherParLogin(log);
                 request.setAttribute("listeDesUsers", liste);
@@ -80,7 +85,7 @@ public class ServletUsers extends HttpServlet {
         RequestDispatcher dp = request.getRequestDispatcher(forwardTo + "&message=" + message);
 
         dp.forward(request, response);
-    // Après un forward, plus rien ne peut être exécuté après !  
+        // Après un forward, plus rien ne peut être exécuté après !  
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -109,7 +114,9 @@ public class ServletUsers extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+       
         processRequest(request, response);
+        
     }
 
     /**
