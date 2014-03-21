@@ -21,7 +21,7 @@
         </c:if>  
 
         <div class="row">
-            <div class="col-sm-3 col-md-2 sidebar">
+            <div class="col-md-2 sidebar">
                 <ul class="nav nav-tabs nav-pills nav-stacked" id="MyTab">
                     <li class="active"><a href="#raffraichir" data-toggle="tab">Afficher</a></li>
                     <li><a href="#ajouter" data-toggle="tab">Crée</a></li>
@@ -30,7 +30,7 @@
                 </ul>
             </div>
 
-            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="col-md-10 main">
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div class="tab-pane active" id="raffraichir">

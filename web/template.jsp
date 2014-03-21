@@ -25,14 +25,14 @@
 
             <jsp:include page="footer.jsp"/>  
         </div>
-        
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.js" ></script>
-        <script>
-
-            $(function() {
-                $('#myTab a:last').tab('show')
-            })
+        <script type="text/javascript">
+            $('#myTab a').click(function(e) {
+                e.preventDefault()
+                $(this).tab('show')
+            });
         </script>
     </script>
 </body>
