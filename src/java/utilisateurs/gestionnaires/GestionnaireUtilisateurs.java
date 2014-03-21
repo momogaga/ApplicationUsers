@@ -55,7 +55,8 @@ public class GestionnaireUtilisateurs {
         u.setLogin(login);
         u.setFirstname(prenom);
         u.setLastname(nom);
-        u.setPassword(password);
+        String CryptedPass = this.encrypt(password);
+        u.setPassword(CryptedPass);
     }
 
     public void supprimeUnUtilisateur(int id) {
