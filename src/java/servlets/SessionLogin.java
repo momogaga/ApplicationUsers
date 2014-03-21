@@ -79,10 +79,9 @@ public class SessionLogin extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String login = request.getParameter("log");
-        String password = request.getParameter("password");
+        String password = request.getParameter("pass");
         Boolean isUser = gestionnaireUtilisateurs.isUser(login, password);
-        
-
+ 
         if (isUser == true) {
             HttpSession session = request.getSession();
             session.setAttribute("login", login);
