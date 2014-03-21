@@ -23,9 +23,7 @@ public class Utilisateur implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String login;
-    private String firstname;
-
-  
+    private String firstname;  
     private String lastname;
     private String password;
     public Utilisateur() {

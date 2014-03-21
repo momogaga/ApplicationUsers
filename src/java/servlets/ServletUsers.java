@@ -45,14 +45,14 @@ public class ServletUsers extends HttpServlet {
         String action = request.getParameter("action");
         String forwardTo = "";
         String message = "";
-        
-        String log = request.getParameter("login");
+
+        String login = request.getParameter("login");
         String nom = request.getParameter("nom");
         String prenom = request.getParameter("prenom");
         String password = request.getParameter("password");
         if (action != null) {
             if (action.equals("listerLesUtilisateurs")) {
-               
+
                 Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();
                 request.setAttribute("listeDesUsers", liste);
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";
@@ -65,17 +65,31 @@ public class ServletUsers extends HttpServlet {
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";
                 message = "Liste des utilisateurs";
             } else if (action.equals("creerUnUtilisateur")) {
-                gestionnaireUtilisateurs.creeUnUtilisateur(nom, prenom, log, password);
+                gestionnaireUtilisateurs.creeUnUtilisateur(nom, prenom, login, password);
                 Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();
                 request.setAttribute("listeDesUsers", liste);
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";
                 message = "Liste des utilisateurs";
-            
             } else if (action.equals("chercherParLogin")) {
-                Collection<Utilisateur> liste = gestionnaireUtilisateurs.chercherParLogin(log);
+                Collection<Utilisateur> liste = gestionnaireUtilisateurs.chercherParLogin(login);
                 request.setAttribute("listeDesUsers", liste);
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";
                 message = "Liste des utilisateurs par login";
+            } else if (action.equals("modifierUnUtilisateur")) {
+                gestionnaireUtilisateurs.modifieUnUtilisateur(nom, prenom, login, password);
+                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();
+                request.setAttribute("listeDesUsers", liste);
+                forwardTo = "index.jsp?action=listerLesUtilisateurs";
+                message = "Modifier un utilisateurs";
+            } else if (action.equals("supprimerUnUtilisateur")) {
+                String[] check = request.getParameterValues("id");
+                for (int i = 0; i < check.length; i++) {
+                    gestionnaireUtilisateurs.supprimeUnUtilisateur(Integer.parseInt(check[i]));
+                }
+                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();
+                request.setAttribute("listeDesUsers", liste);
+                forwardTo = "index.jsp?action=listerLesUtilisateurs";
+                message = "Supprimer un utilisateurs";
             } else {
                 forwardTo = "index.jsp?action=todo";
                 message = "La fonctionnalité pour le paramètre " + action + " est à implémenter !";
@@ -114,9 +128,9 @@ public class ServletUsers extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
+
         processRequest(request, response);
-        
+
     }
 
     /**

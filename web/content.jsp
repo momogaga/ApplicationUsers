@@ -26,7 +26,7 @@
             <li><a href="ServletUsers?action=listerLesUtilisateurs">Afficher/raffraichir la liste de tous les utilisateurs</a></li>  
             <p>  
         </ul>  
-         
+
         <ol>  
             <!--<li><a href="ServletUsers?action=creerUtilisateursDeTest">Créer 4 utilisateurs de test</a></li>-->  
 
@@ -38,14 +38,14 @@
                 Password : <input type="text" name="password"/><br>
                 <!-- Astuce pour passer des paramètres à une servlet depuis un formulaire JSP !-->  
                 <input type="hidden" name="action" value="creerUnUtilisateur"/>  
-                <button type="submit" name="submit"> Créer l'utilisateur</button>  
+                <button type="submit" name="submit">Créer l'utilisateur</button>  
             </form>  
 
             <li>Afficher les détails d'un utilisateur</li>  
             <form action="ServletUsers" method="get">  
-                login : <input type="text" name="login"/><br>  
+                Login : <input type="text" name="login"/><br>  
                 <input type="hidden" name="action" value="chercherParLogin"/>  
-                <input type="submit" value="Chercher" name="submit"/>  
+                <button type="submit" name="submit">Chercher</button>  
             </form>  
 
 
@@ -53,10 +53,11 @@
             <form action="ServletUsers" method="get">  
                 Login : <input type="text" name="login"/><br>  
                 Nom : <input type="text" name="nom"/><br>  
-                Prénom : <input type="text" name="prenom"/><br>  
-                <input type="hidden" name="action" value="updateUtilisateur"/>  
-                <input type="submit" value="Mettre à jour" name="submit"/>  
-            </form>  
+                Prénom : <input type="text" name="prenom"/><br>
+                Password : <input type="text" name="password"/><br>
+                <input type="hidden" name="action" value="modifierUnUtilisateur"/>  
+                <button type="submit" name="submit">Mettre à jour</button>  
+            </form>    
         </ol>  
 
         <!-- Fin du menu -->  
@@ -64,36 +65,42 @@
         <!-- Zone qui affiche les utilisateurs si le paramètre action vaut listerComptes -->  
         <c:if test="${param.action == 'listerLesUtilisateurs'}" >  
             <h2>Liste des utilisateurs</h2>  
-
-            <table class="listing">  
-                <!-- La ligne de titre du tableau des comptes -->  
-                <tr>  
-                    <td><b>Login</b></td>  
-                    <td><b>Nom</b></td>  
-                    <td><b>Prénom</b></td>  
-                </tr>  
-
-                <!-- Ici on affiche les lignes, une par utilisateur -->  
-                <!-- cette variable montre comment on peut utiliser JSTL et EL pour calculer -->  
-                <c:set var="total" value="0"/>  
-
-                <c:forEach var="u" items="${listeDesUsers}" varStatus="status">  
-                    <tr class="${status.index%2==0 ? 'alt' : ''}">  
-                        <td>${u.login}</td>  
-                        <td>${u.firstname}</td>  
-                        <td>${u.lastname}</td>    
-                        <!-- On compte le nombre de users -->  
-                        <c:set var="total" value="${total+1}"/>  
+            <form action="ServletUsers" method="get"> 
+                <table class="listing">  
+                    <!-- La ligne de titre du tableau des comptes -->  
+                    <tr>  
+                        <td><b>Login</b></td>  
+                        <td><b>Nom</b></td>  
+                        <td><b>Prénom</b></td>
                     </tr>  
-                </c:forEach>  
 
-                <!-- Affichage du solde total dans la dernière ligne du tableau -->  
-                <tr>
-                    <td><b>TOTAL</b></td>
-                    <td></td>
-                    <td><b>${total}</b></td>
-                </tr>  
-            </table>  
+                    <!-- Ici on affiche les lignes, une par utilisateur -->  
+                    <!-- cette variable montre comment on peut utiliser JSTL et EL pour calculer -->  
+                    <c:set var="total" value="0"/>  
+
+                    <c:forEach var="u" items="${listeDesUsers}" varStatus="status">  
+                        <tr class="${status.index%2==0 ? 'alt' : ''}">  
+                            <td>${u.login}</td>  
+                            <td>${u.firstname}</td>  
+                            <td>${u.lastname}</td> 
+                      
+                            <td><input type="checkbox" value="${u.id}" name="id"/></td>
+                            <!-- On compte le nombre de users -->  
+                            <c:set var="total" value="${total+1}"/>  
+                        </tr>  
+                    </c:forEach>  
+
+                    <!-- Affichage du solde total dans la dernière ligne du tableau -->  
+                    <tr>
+                        <td><b>TOTAL</b></td>
+                        <td></td><td></td>
+                        <td><b>${total}</b></td>
+                    </tr>  
+                </table>  
+
+                <input type="hidden" name="action" value="supprimerUnUtilisateur"/> 
+                <button type="submit" name="submit">Supprimer</button> 
+            </form>
         </c:if>  
     </body>
 </html>

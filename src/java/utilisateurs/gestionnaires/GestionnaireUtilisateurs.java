@@ -26,7 +26,7 @@ public class GestionnaireUtilisateurs {
 
     public void creerUtilisateursDeTest() {
         creeUnUtilisateur("John", "Lennon", "jlennon", "root");
-        creeUnUtilisateur("Paul", "Mac Cartney", "pmc","root");
+        creeUnUtilisateur("Paul", "Mac Cartney", "pmc", "root");
         creeUnUtilisateur("Ringo", "Starr", "rstarr", "root");
         creeUnUtilisateur("Georges", "Harisson", "georgesH", "root");
     }
@@ -35,12 +35,34 @@ public class GestionnaireUtilisateurs {
         Utilisateur u = new Utilisateur(nom, prenom, login, password);
         em.persist(u);
         return u;
-    }   
-    
-    public Collection<Utilisateur> chercherParLogin(String login){
+    }
+
+    public Collection<Utilisateur> chercherParLogin(String login) {
         Query q = em.createQuery("select u from Utilisateur u where u.login=:login");
         q.setParameter("login", login);
         return q.getResultList();
+    }
+
+    public Utilisateur chercherUnUtilisateurParLogin(String login) {
+        Query q = em.createQuery("select u from Utilisateur u where u.login=:login");
+        q.setParameter("login", login);
+        Utilisateur u = (Utilisateur) q.getSingleResult();
+        return u;
+    }
+
+    public void modifieUnUtilisateur(String nom, String prenom, String login, String password) {
+        Utilisateur u = chercherUnUtilisateurParLogin(login);
+        u.setLogin(login);
+        u.setFirstname(prenom);
+        u.setLastname(nom);
+        u.setPassword(password);
+    }
+
+    public void supprimeUnUtilisateur(int id) {
+
+        Utilisateur u = em.find(Utilisateur.class, id);
+        em.remove(u);
+
     }
 
     public Collection<Utilisateur> getAllUsers() {
@@ -48,23 +70,25 @@ public class GestionnaireUtilisateurs {
         Query q = em.createQuery("select u from Utilisateur u");
         return q.getResultList();
     }
-    public Boolean isUser(String login, String password){
+
+    public Boolean isUser(String login, String password) {
         String passCrypte = this.encrypt(password);
         Query q = em.createQuery("select u from Utilisateur u where u.login=:login and u.password=:passCrypte");
         q.setParameter("passCrypte", passCrypte);
         q.setParameter("login", login);
-        if(q.getResultList().isEmpty()){
+        if (q.getResultList().isEmpty()) {
             return false;
-        }else{
+        } else {
             return true;
         }
-        
+
     }
-     public String encrypt(String password){
-        String crypte="";
-        for (int i=0; i<password.length();i++)  {
-            int c=password.charAt(i)^48;  
-            crypte=crypte+(char)c; 
+
+    public String encrypt(String password) {
+        String crypte = "";
+        for (int i = 0; i < password.length(); i++) {
+            int c = password.charAt(i) ^ 48;
+            crypte = crypte + (char) c;
         }
         return crypte;
     }
