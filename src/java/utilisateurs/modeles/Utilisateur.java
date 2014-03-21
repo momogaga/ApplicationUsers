@@ -24,15 +24,18 @@ public class Utilisateur implements Serializable {
     private int id;
     private String login;
     private String firstname;
-    private String lastname;
 
+  
+    private String lastname;
+    private String password;
     public Utilisateur() {
     }
 
-    public Utilisateur(String nom, String prenom, String login) {
+    public Utilisateur(String nom, String prenom, String login, String password) {
         this.login = login;
         this.firstname = nom;
         this.lastname = prenom;
+        this.password = this.encrypt(password);
     }
 
     public int getId() {
@@ -96,7 +99,13 @@ public class Utilisateur implements Serializable {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
+  public String getPassword() {
+        return password;
+    }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
     @Override
     public int hashCode() {
         int hash = 0;
@@ -116,7 +125,15 @@ public class Utilisateur implements Serializable {
         }
         return true;
     }
-
+    public String encrypt(String password){
+        String crypte="";
+        for (int i=0; i<password.length();i++)  {
+            int c=password.charAt(i)^48;  
+            crypte=crypte+(char)c; 
+        }
+        return crypte;
+    }
+    
     @Override
     public String toString() {
         return "utilisateurs.modeles.Utilisateur[ id=" + id + " ]";
