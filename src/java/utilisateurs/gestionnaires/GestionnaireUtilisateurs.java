@@ -25,14 +25,14 @@ public class GestionnaireUtilisateurs {
     private EntityManager em;
 
     public void creerUtilisateursDeTest() {
-        creeUnUtilisateur("John", "Lennon", "jlennon");
-        creeUnUtilisateur("Paul", "Mac Cartney", "pmc");
-        creeUnUtilisateur("Ringo", "Starr", "rstarr");
-        creeUnUtilisateur("Georges", "Harisson", "georgesH");
+        creeUnUtilisateur("John", "Lennon", "jlennon", "root");
+        creeUnUtilisateur("Paul", "Mac Cartney", "pmc","root");
+        creeUnUtilisateur("Ringo", "Starr", "rstarr", "root");
+        creeUnUtilisateur("Georges", "Harisson", "georgesH", "root");
     }
 
-    public Utilisateur creeUnUtilisateur(String nom, String prenom, String login) {
-        Utilisateur u = new Utilisateur(nom, prenom, login);
+    public Utilisateur creeUnUtilisateur(String nom, String prenom, String login, String password) {
+        Utilisateur u = new Utilisateur(nom, prenom, login, password);
         em.persist(u);
         return u;
     }   
@@ -47,6 +47,26 @@ public class GestionnaireUtilisateurs {
         // Exécution d'une requête équivalente à un select *  
         Query q = em.createQuery("select u from Utilisateur u");
         return q.getResultList();
+    }
+    public Boolean isUser(String login, String password){
+        String passCrypte = this.encrypt(password);
+        Query q = em.createQuery("select u from Utilisateur u where u.login=:login and u.password=:passCrypte");
+        q.setParameter("passCrypte", passCrypte);
+        q.setParameter("login", login);
+        if(q.getResultList().isEmpty()){
+            return false;
+        }else{
+            return true;
+        }
+        
+    }
+     public String encrypt(String password){
+        String crypte="";
+        for (int i=0; i<password.length();i++)  {
+            int c=password.charAt(i)^48;  
+            crypte=crypte+(char)c; 
+        }
+        return crypte;
     }
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
