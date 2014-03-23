@@ -14,7 +14,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
         <title>Gestionnaire d'utilisateurs</title>  
     </head>  
-    <body>  
+    <body> 
+                <c:if test="${login ne null}">
+
         <!-- Message qui s'affiche lorsque la page est appelé avec un paramètre http message -->  
         <c:if test="${!empty param['message']}">  
             <h2>Reçu message : ${param.message}</h2>  
@@ -114,7 +116,10 @@
                 <!-- Fin du menu -->  
             </div>
         </div>
-
+        </c:if> 
+                    <c:if test="${empty login}">
+                        <p>Veuillez vous connecter pour acceder au fonctionnalité</p>
+                    </c:if>
 
     </body>
 </html>
