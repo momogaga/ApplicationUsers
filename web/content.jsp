@@ -36,15 +36,33 @@
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div class="tab-pane active" id="raffraichir">
+                            <form class="form-horizontal">
                             <legend><a href="ServletUsers?action=listerLesUtilisateurs">Afficher/raffraichir la liste de tous les utilisateurs</a></legend>
-                            <ul>  
-                                <!--<li><a href="ServletUsers?action=listerLesUtilisateurs">Afficher/raffraichir la liste de tous les utilisateurs</a></li>-->  
-                                <!--<li><a href="ServletUsers?action=creerUtilisateursDeTest">Créer 4 utilisateurs de test</a></li>-->  
+
+                            <!-- File Button --> 
+                            <div class="form-group">
                              
-                            </ul>  
+                                <label class="col-md-3 control-label"></label>
+                                <div class="col-md-4">
+                                    <input id="upload" name="upload" class="input-file" type="file">
+                                    
+                                </div> 
+                                
+                                <div class="col-md-4">
+                                <button type="submit" name="subimit" class='btn btn-success'>Uploader</button>
+                           
+                                </div>
+                                
+                            </div>
+                           
+                            </form>
+                            <!--<ul>  
+                                <li><a href="ServletUsers?action=listerLesUtilisateurs">Afficher/raffraichir la liste de tous les utilisateurs</a></li>  
+                                <li><a href="ServletUsers?action=creerUtilisateursDeTest">Créer 4 utilisateurs de test</a></li> 
+                            </ul> -->
                             <!-- Zone qui affiche les utilisateurs si le paramètre action vaut listerComptes -->  
                             <c:if test="${param.action == 'listerLesUtilisateurs'}" >  
-                               
+
                                 <form action="ServletUsers" method="get"> 
                                     <table class="listing">  
                                         <!-- La ligne de titre du tableau des comptes -->  
@@ -205,7 +223,7 @@
             </div>
         </c:if> 
         <c:if test="${empty login}">
-            <p>Veuillez vous connecter pour acceder au fonctionnalité</p>
+            <p>Veuillez vous connecter pour accéder aux fonctionnalités</p>
         </c:if>
 
     </body>
