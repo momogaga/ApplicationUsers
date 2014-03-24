@@ -36,25 +36,26 @@
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div class="tab-pane active" id="raffraichir">
-                            <form class="form-horizontal">
-                            <legend><a href="ServletUsers?action=listerLesUtilisateurs">Afficher/raffraichir la liste de tous les utilisateurs</a></legend>
+                            <form class="form-horizontal" action="FileUpload" method="post" enctype="multipart/form-data">
+                                <legend><a href="ServletUsers?action=listerLesUtilisateurs">Afficher/raffraichir la liste de tous les utilisateurs</a></legend>
+ 
+                                <div class="form-group">
 
-                            <!-- File Button --> 
-                            <div class="form-group">
-                             
-                                <label class="col-md-3 control-label"></label>
-                                <div class="col-md-4">
-                                    <input id="upload" name="upload" class="input-file" type="file">
-                                    
-                                </div> 
-                                
-                                <div class="col-md-4">
-                                <button type="submit" name="subimit" class='btn btn-success'>Uploader</button>
-                           
+                                    <label class="col-md-3 control-label"></label>
+                                    <div class="col-md-4">
+                                        <input id="upload" name="uploaded" class="input-file" type="file">
+                                    </div> 
+                                    <div class="col-md-4">
+                                        <button type="submit" name="submit" class='btn btn-success'>Uploader</button>
+                                    </div>
+                                   
+                                    <!-- Je n'arrive pas à test si un fichier est uploadé ou non (ça me renvoi null)-->
+                                    <c:if test="${uploaded ne null}">                                        
+                                        <label>Fichier uploadé</label>                                                
+                                    </c:if> 
+
                                 </div>
-                                
-                            </div>
-                           
+
                             </form>
                             <!--<ul>  
                                 <li><a href="ServletUsers?action=listerLesUtilisateurs">Afficher/raffraichir la liste de tous les utilisateurs</a></li>  
