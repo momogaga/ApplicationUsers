@@ -15,7 +15,7 @@ import utilisateurs.gestionnaires.GestionnaireUtilisateurs;
  *
  * @author MoMo
  */
-public class CreateDB implements ServletContextListener {
+public class CreationBD implements ServletContextListener {
 
     @EJB
     GestionnaireUtilisateurs gu;
