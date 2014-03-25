@@ -19,8 +19,8 @@ import utilisateurs.modeles.Utilisateur;
 @Stateless
 public class GestionnaireUtilisateurs {
 
-    // Ici injection de code : on n'initialise pas. L'entity manager sera créé  
-    // à partir du contenu de persistence.xml  
+    // Ici injection de code : on n'initialise pas. L'entity manager sera créé
+    // à partir du contenu de persistence.xml
     @PersistenceContext
     private EntityManager em;
 
@@ -67,8 +67,17 @@ public class GestionnaireUtilisateurs {
     }
 
     public Collection<Utilisateur> getAllUsers() {
-        // Exécution d'une requête équivalente à un select *  
+        // Exécution d'une requête équivalente à un select *
         Query q = em.createQuery("select u from Utilisateur u");
+        return q.getResultList();
+    }
+
+    public Collection<Utilisateur> getAllUsers(int min, int max) {
+        // Exécution d'une requête équivalente à un select *
+        Query q = em.createQuery("select u from Utilisateur u");
+        q.setMaxResults(max);
+        q.setFirstResult(min);
+
         return q.getResultList();
     }
 
