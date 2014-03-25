@@ -52,12 +52,10 @@ public class ServletUsers extends HttpServlet {
         String password = request.getParameter("password");
         if (action != null) {
             if (action.equals("listerLesUtilisateurs")) {
-
                 Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();
                 request.setAttribute("listeDesUsers", liste);
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";
                 message = "Liste des utilisateurs";
-
             } else if (action.equals("creerUtilisateursDeTest")) {
                 gestionnaireUtilisateurs.creerUtilisateursDeTest();
                 Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();
@@ -75,7 +73,12 @@ public class ServletUsers extends HttpServlet {
                 request.setAttribute("listeDesUsers", liste);
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";
                 message = "Liste des utilisateurs par login";
-            } else if (action.equals("modifierUnUtilisateur")) {
+            }
+            else if (action.equals("modificationUtilisateur")) {
+                forwardTo = "index.jsp?action=#modifier";
+                message = "Liste formulaire modification utilisateurs"; 
+            }
+            else if (action.equals("modifierUnUtilisateur")) {
                 gestionnaireUtilisateurs.modifieUnUtilisateur(nom, prenom, login, password);
                 Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();
                 request.setAttribute("listeDesUsers", liste);

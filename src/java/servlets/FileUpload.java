@@ -5,11 +5,14 @@
  */
 package servlets;
 
+import au.com.bytecode.opencsv.CSVReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,6 +23,7 @@ import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import utilisateurs.gestionnaires.GestionnaireUtilisateurs;
 
 /**
  *
@@ -27,6 +31,9 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  */
 @WebServlet(name = "FileUpload", urlPatterns = {"/FileUpload"})
 public class FileUpload extends HttpServlet {
+
+    @EJB
+    private GestionnaireUtilisateurs gestionnaireUtilisateurs;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -54,7 +61,16 @@ public class FileUpload extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    public void createUser(FileReader fr, char separator) throws IOException {
+        CSVReader reader = new CSVReader(fr, separator);
+        String[] nextLine;
+
+        while ((nextLine = reader.readNext()) != null) {
+            // nextLine[] is an array of values from the line
+            gestionnaireUtilisateurs.creeUnUtilisateur(nextLine[0], nextLine[1], nextLine[2], nextLine[3]);
+        }
+    }    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -80,19 +96,19 @@ public class FileUpload extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
+
         String uploaded = request.getParameter("uploaded");
-        
+
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         if (isMultipart) {
-            // Create a factory for disk-based file items  
+            // Create a factory for disk-based file items
             FileItemFactory factory = new DiskFileItemFactory();
-            // Create a new file upload handler  
+            // Create a new file upload handler
             ServletFileUpload upload = new ServletFileUpload(factory);
             try {
-                // Parse the request  
+                // Parse the request
                 List /* FileItem */ items = upload.parseRequest(request);
                 Iterator iterator = items.iterator();
                 while (iterator.hasNext()) {
@@ -101,6 +117,7 @@ public class FileUpload extends HttpServlet {
                         String fileName = item.getName();
                         String root = getServletContext().getRealPath("/");
                         File path = new File(root + "uploads");
+                        System.out.println(path.getAbsolutePath());
                         if (!path.exists()) {
                             boolean status = path.mkdirs();
                         }
@@ -112,6 +129,8 @@ public class FileUpload extends HttpServlet {
                             out.println("file not found");
                         }
                         System.out.println(uploaded);
+                        FileReader fr = new FileReader(uploadedFile.getAbsolutePath());
+                        this.createUser(fr, ';');
                         getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
                     } else {
                         String abc = item.getString();

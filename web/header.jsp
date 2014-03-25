@@ -27,5 +27,5 @@
     </div>
 
     <h3 class="text-muted">Gestionnaire d'utilisateurs</h3>
-
+    
 </div>

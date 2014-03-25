@@ -1,4 +1,6 @@
 <div id="footer">  
+    <hr>
+    
     <ul class="bottom">  
         <li><a href="http://miage.unice.fr/">Miage HOME</a> |  </li>
         <li>GAIECH Mohamed & LAPENTA Giuseppe | </li> 

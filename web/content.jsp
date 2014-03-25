@@ -24,21 +24,21 @@
 
             <div class="row">
                 <div class="col-md-2 sidebar">
-                    <ul class="nav nav-tabs nav-pills nav-stacked" id="MyTab">
-                        <li class="active"><a href="#raffraichir" data-toggle="tab">Afficher</a></li>
-                        <li><a href="#ajouter" data-toggle="tab">Crée</a></li>
-                        <li><a href="#rechercher" data-toggle="tab">Rechercher</a></li>
-                        <li><a href="#modifier" data-toggle="tab">Mettre à jour</a></li>
+                    <ul class="nav nav-pills nav-stacked" id="MyTab">
+                        <li class="active"><a href="#rafraichir" data-toggle="tab"><span class="glyphicon glyphicon-refresh"></span> Rafraichir</a></li>
+                        <li><a href="#ajouter" data-toggle="tab"><span class="glyphicon glyphicon-plus"></span> Crée</a></li>
+                        <li><a href="#rechercher" data-toggle="tab"><span class="glyphicon glyphicon-search"></span> Rechercher</a></li>
+                        <li><a href="#modifier" data-toggle="tab"><span class="glyphicon glyphicon-edit"></span> Mettre à jour</a></li>
                     </ul>
                 </div>
 
                 <div class="col-md-10 main">
                     <!-- Tab panes -->
                     <div class="tab-content">
-                        <div class="tab-pane active" id="raffraichir">
+                        <div class="tab-pane active" id="rafraichir">
                             <form class="form-horizontal" action="FileUpload" method="post" enctype="multipart/form-data">
-                                <legend><a href="ServletUsers?action=listerLesUtilisateurs">Afficher/raffraichir la liste de tous les utilisateurs</a></legend>
- 
+                                <legend><a href="ServletUsers?action=listerLesUtilisateurs">Afficher la liste de tous les utilisateurs</a></legend>
+
                                 <div class="form-group">
 
                                     <label class="col-md-3 control-label"></label>
@@ -48,7 +48,7 @@
                                     <div class="col-md-4">
                                         <button type="submit" name="submit" class='btn btn-success'>Uploader</button>
                                     </div>
-                                   
+
                                     <!-- Je n'arrive pas à test si un fichier est uploadé ou non (ça me renvoi null)-->
                                     <c:if test="${uploaded ne null}">                                        
                                         <label>Fichier uploadé</label>                                                
@@ -61,11 +61,11 @@
                                 <li><a href="ServletUsers?action=listerLesUtilisateurs">Afficher/raffraichir la liste de tous les utilisateurs</a></li>  
                                 <li><a href="ServletUsers?action=creerUtilisateursDeTest">Créer 4 utilisateurs de test</a></li> 
                             </ul> -->
-                            <!-- Zone qui affiche les utilisateurs si le paramètre action vaut listerComptes -->  
+                            <!-- Zone qui affiche les utilisateurs si le paramètre action vaut listerUtilisateur -->  
                             <c:if test="${param.action == 'listerLesUtilisateurs'}" >  
 
                                 <form action="ServletUsers" method="get"> 
-                                    <table class="listing">  
+                                    <table class="table table-striped">  
                                         <!-- La ligne de titre du tableau des comptes -->  
                                         <tr>  
                                             <td><b>Login</b></td>  
@@ -79,13 +79,13 @@
 
                                         <c:forEach var="u" items="${listeDesUsers}" varStatus="status">  
                                             <tr class="${status.index%2==0 ? 'alt' : ''}">  
-                                                <td>${u.login}</td> 
-                                                <td>${u.lastname}</td> 
-                                                <td>${u.firstname}</td>                                            
+                                            <td>${u.login}</td>
+                                            <td>${u.lastname}</td> 
+                                            <td>${u.firstname}</td>                                            
 
-                                                <td><input type="checkbox" value="${u.id}" name="id"/></td>
-                                                <!-- On compte le nombre de users -->  
-                                                <c:set var="total" value="${total+1}"/>  
+                                            <td><input type="checkbox" value="${u.id}" name="id"/></td>
+                                            <!-- On compte le nombre de users -->  
+                                            <c:set var="total" value="${total+1}"/>  
                                             </tr>  
                                         </c:forEach>  
 
@@ -180,6 +180,13 @@
                                     <legend>Modifier un utilisateur</legend>
 
                                     <div class="form-group">
+                                        <label class="col-md-4 control-label" for="login">Login :</label>  
+                                        <div class="col-md-4">
+                                            <input id="login" name="login" type="text" placeholder="" class="form-control input-md" required="">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
                                         <label class="col-md-4 control-label" for="nom">Nom :</label>  
                                         <div class="col-md-4">
                                             <input id="nom" name="nom" type="text" placeholder="" class="form-control input-md" required="">
@@ -190,13 +197,6 @@
                                         <label class="col-md-4 control-label" for="prenom">Prénom :</label>  
                                         <div class="col-md-4">
                                             <input id="prenom" name="prenom" type="text" placeholder="" class="form-control input-md" required="">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label" for="login">Login :</label>  
-                                        <div class="col-md-4">
-                                            <input id="login" name="login" type="text" placeholder="" class="form-control input-md" required="">
                                         </div>
                                     </div>
 
