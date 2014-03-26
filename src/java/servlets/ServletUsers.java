@@ -52,8 +52,24 @@ public class ServletUsers extends HttpServlet {
         String password = request.getParameter("password");
         if (action != null) {
             if (action.equals("listerLesUtilisateurs")) {
-                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();
+
+                int page = 1;
+                int recordsPerPage = 5;
+
+                if (request.getParameter("page") != null) {
+                    page = Integer.parseInt(request.getParameter("page"));
+                }
+
+                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers((page - 1) * recordsPerPage,
+                        recordsPerPage);
+
+                int noOfRecords = gestionnaireUtilisateurs.getNoOfRecords();
+                int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+
                 request.setAttribute("listeDesUsers", liste);
+                request.setAttribute("noOfPages", noOfPages);
+                request.setAttribute("currentPage", page);
+
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";
                 message = "Liste des utilisateurs";
             } else if (action.equals("creerUtilisateursDeTest")) {
@@ -73,12 +89,10 @@ public class ServletUsers extends HttpServlet {
                 request.setAttribute("listeDesUsers", liste);
                 forwardTo = "index.jsp?action=listerLesUtilisateurs";
                 message = "Liste des utilisateurs par login";
-            }
-            else if (action.equals("modificationUtilisateur")) {
+            } else if (action.equals("modificationUtilisateur")) {
                 forwardTo = "index.jsp?action=#modifier";
-                message = "Liste formulaire modification utilisateurs"; 
-            }
-            else if (action.equals("modifierUnUtilisateur")) {
+                message = "Liste formulaire modification utilisateurs";
+            } else if (action.equals("modifierUnUtilisateur")) {
                 gestionnaireUtilisateurs.modifieUnUtilisateur(nom, prenom, login, password);
                 Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();
                 request.setAttribute("listeDesUsers", liste);

@@ -79,13 +79,13 @@
 
                                         <c:forEach var="u" items="${listeDesUsers}" varStatus="status">  
                                             <tr class="${status.index%2==0 ? 'alt' : ''}">  
-                                            <td>${u.login}</td>
-                                            <td>${u.lastname}</td> 
-                                            <td>${u.firstname}</td>                                            
+                                                <td>${u.login}</td>
+                                                <td>${u.lastname}</td> 
+                                                <td>${u.firstname}</td>                                            
 
-                                            <td><input type="checkbox" value="${u.id}" name="id"/></td>
-                                            <!-- On compte le nombre de users -->  
-                                            <c:set var="total" value="${total+1}"/>  
+                                                <td><input type="checkbox" value="${u.id}" name="id"/></td>
+                                                <!-- On compte le nombre de users -->  
+                                                <c:set var="total" value="${total+1}"/>  
                                             </tr>  
                                         </c:forEach>  
 
@@ -96,6 +96,33 @@
                                             <td><b>${total}</b></td>
                                         </tr>  
                                     </table>  
+                                   
+                                    <c:if test="${currentPage != 1}">
+                                        <td><a href="ServletUsers?action=listerLesUtilisateurs?page=${currentPage - 1}">Previous</a></td>
+                                    </c:if>
+                                        
+                                        <p>${noOfPages}</p>
+                                    
+                                    <table border="1" cellpadding="5" cellspacing="5">
+                                        <tr>
+                                            <c:forEach begin="1" end="${noOfPages}" var="i">
+                                                <c:choose>
+                                                    <c:when test="${currentPage eq i}">
+                                                        <td>${i}</td>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <td><a href="ServletUsers?action=listerLesUtilisateurs?page=${i}">${i}</a></td>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </c:forEach>
+                                        </tr>
+                                    </table>
+
+                                    <%--For displaying Next link --%>
+                                    <c:if test="${currentPage lt noOfPages}">
+                                        <td><a href="ServletUsers?action=listerLesUtilisateurs?page=${currentPage + 1}">Next</a></td>
+                                    </c:if>    
+
                                     <br />
                                     <input type="hidden" name="action" value="supprimerUnUtilisateur"/> 
                                     <button type="submit" name="submit" class="btn btn-danger">Supprimer l'utilisateur</button> 
