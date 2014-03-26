@@ -29,8 +29,15 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.js" ></script>
+
         <script type="text/javascript">
-            var checker = document.getElementById('checker');
+            $('#myTab a').click(function(e) {
+                e.preventDefault()
+                $(this).tab('show')
+            });
+        </script>
+        <script type="text/javascript">
+            var checker = document.getElementById('check');
 
             var btn = document.getElementById('btn');
             checker.onchange = function() {
@@ -41,12 +48,5 @@
                 }
             }
         </script>
-        <script type="text/javascript">
-            $('#myTab a').click(function(e) {
-                e.preventDefault()
-                $(this).tab('show')
-            });
-        </script>
-    </script>
-</body>
+    </body>
 </html>

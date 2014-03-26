@@ -39,6 +39,11 @@ public class ServletUsers extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
+    public void affiche(){
+        
+    }
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Pratique pour décider de l'action à faire  
@@ -52,19 +57,25 @@ public class ServletUsers extends HttpServlet {
         String password = request.getParameter("password");
 
         int page = 1;
-        int elementsPage = 5;
+        int elementsParPage = 5;
 
         if (action != null) {
-            if (action.equals("listerLesUtilisateurs")) {
+            if(action.equals("listerLeUtilisateur")){
+                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();
+                request.setAttribute("listeDesUsers", liste);
+                forwardTo = "index.jsp?action=listerLeUtilisateur";
+                message = "Affiche un utilisateurs";
+            }            
+            else if (action.equals("listerLesUtilisateurs")) {
                 if (request.getParameter("page") != null) {
                     page = Integer.parseInt(request.getParameter("page"));
                 }
 
-                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers((page - 1) * elementsPage,
-                        elementsPage);
+                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers((page - 1) * elementsParPage,
+                        elementsParPage);
 
                 int elements = gestionnaireUtilisateurs.getElements();
-                int numPage = (int) Math.ceil(elements * 1.0 / elementsPage);
+                int numPage = (int) Math.ceil(elements * 1.0 / elementsParPage);
 
                 request.setAttribute("listeDesUsers", liste);
                 request.setAttribute("noOfPages", numPage);
@@ -78,11 +89,11 @@ public class ServletUsers extends HttpServlet {
                     page = Integer.parseInt(request.getParameter("page"));
                 }
 
-                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers((page - 1) * elementsPage,
-                        elementsPage);
+                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers((page - 1) * elementsParPage,
+                        elementsParPage);
 
                 int elements = gestionnaireUtilisateurs.getElements();
-                int numPage = (int) Math.ceil(elements * 1.0 / elementsPage);
+                int numPage = (int) Math.ceil(elements * 1.0 / elementsParPage);
 
                 request.setAttribute("listeDesUsers", liste);
                 request.setAttribute("noOfPages", numPage);
@@ -96,11 +107,11 @@ public class ServletUsers extends HttpServlet {
                     page = Integer.parseInt(request.getParameter("page"));
                 }
 
-                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers((page - 1) * elementsPage,
-                        elementsPage);
+                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers((page - 1) * elementsParPage,
+                        elementsParPage);
 
                 int elements = gestionnaireUtilisateurs.getElements();
-                int numPage = (int) Math.ceil(elements * 1.0 / elementsPage);
+                int numPage = (int) Math.ceil(elements * 1.0 / elementsParPage);
 
                 request.setAttribute("listeDesUsers", liste);
                 request.setAttribute("noOfPages", numPage);
@@ -111,7 +122,7 @@ public class ServletUsers extends HttpServlet {
             } else if (action.equals("chercherParLogin")) {
                 Collection<Utilisateur> liste = gestionnaireUtilisateurs.chercherParLogin(login);
                 request.setAttribute("listeDesUsers", liste);
-                forwardTo = "index.jsp?action=listerLesUtilisateurs";
+                forwardTo = "index.jsp?action=listerLeUtilisateur";
                 message = "Liste des utilisateurs par login";
             } else if (action.equals("modifierUnUtilisateur")) {
                 gestionnaireUtilisateurs.modifieUnUtilisateur(nom, prenom, login, password);
@@ -119,11 +130,11 @@ public class ServletUsers extends HttpServlet {
                     page = Integer.parseInt(request.getParameter("page"));
                 }
 
-                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers((page - 1) * elementsPage,
-                        elementsPage);
+                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers((page - 1) * elementsParPage,
+                        elementsParPage);
 
                 int elements = gestionnaireUtilisateurs.getElements();
-                int numPage = (int) Math.ceil(elements * 1.0 / elementsPage);
+                int numPage = (int) Math.ceil(elements * 1.0 / elementsParPage);
 
                 request.setAttribute("listeDesUsers", liste);
                 request.setAttribute("noOfPages", numPage);
@@ -140,11 +151,11 @@ public class ServletUsers extends HttpServlet {
                     page = Integer.parseInt(request.getParameter("page"));
                 }
 
-                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers((page - 1) * elementsPage,
-                        elementsPage);
+                Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers((page - 1) * elementsParPage,
+                        elementsParPage);
 
                 int elements = gestionnaireUtilisateurs.getElements();
-                int numPage = (int) Math.ceil(elements * 1.0 / elementsPage);
+                int numPage = (int) Math.ceil(elements * 1.0 / elementsParPage);
 
                 request.setAttribute("listeDesUsers", liste);
                 request.setAttribute("noOfPages", numPage);

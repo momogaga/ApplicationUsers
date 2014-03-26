@@ -48,22 +48,11 @@
                                     <div class="col-md-4">
                                         <button type="submit" name="submit" class='btn btn-success'>Uploader</button>
                                     </div>
-
-                                    <!-- Je n'arrive pas à test si un fichier est uploadé ou non (ça me renvoi null)-->
-                                    <c:if test="${uploaded ne null}">                                        
-                                        <label>Fichier uploadé</label>                                                
-                                    </c:if> 
-
                                 </div>
 
                             </form>
-                            <!--<ul>  
-                                <li><a href="ServletUsers?action=listerLesUtilisateurs">Afficher/raffraichir la liste de tous les utilisateurs</a></li>  
-                                <li><a href="ServletUsers?action=creerUtilisateursDeTest">Créer 4 utilisateurs de test</a></li> 
-                            </ul> -->
                             <!-- Zone qui affiche les utilisateurs si le paramètre action vaut listerUtilisateur -->  
                             <c:if test="${param.action == 'listerLesUtilisateurs'}" >  
-
                                 <form action="ServletUsers" method="get"> 
                                     <table class="table table-striped">  
                                         <!-- La ligne de titre du tableau des comptes -->  
@@ -84,7 +73,7 @@
                                                 <td>${u.lastname}</td> 
                                                 <td>${u.firstname}</td>                                            
 
-                                                <td><input type="checkbox" value="${u.id}" name="id" id="checker"/></td>
+                                                <td><input type="checkbox" value="${u.id}" name="id" id="check"/></td>
                                                 <!-- On compte le nombre de users -->  
                                                 <c:set var="total" value="${total+1}"/>  
                                             </tr>  
@@ -123,10 +112,52 @@
 
                                     <br /><br />
                                     <input type="hidden" name="action" value="supprimerUnUtilisateur"/> 
-                                    <button type="submit" name="submit" class="btn btn-danger" id="btn">Supprimer l'utilisateur</button> 
+                                    <button type="submit" name="submit" class="btn btn-danger" id="btn" disabled="disabled">Supprimer l'utilisateur</button> 
 
                                 </form>
                             </c:if>  
+
+                            <c:if test="${param.action == 'listerLeUtilisateur'}" >  
+                                <form action="ServletUsers" method="get"> 
+                                    <table class="table table-striped">  
+                                        <!-- La ligne de titre du tableau des comptes -->  
+                                        <tr>  
+                                            <td><b>Login</b></td>  
+                                            <td><b>Nom</b></td>  
+                                            <td><b>Prénom</b></td>
+                                            <td><b></b></td>
+                                        </tr>  
+
+                                        <!-- Ici on affiche les lignes, une par utilisateur -->  
+                                        <!-- cette variable montre comment on peut utiliser JSTL et EL pour calculer -->  
+                                        <c:set var="total" value="0"/>  
+
+                                        <c:forEach var="u" items="${listeDesUsers}" varStatus="status">  
+                                            <tr class="${status.index%2==0 ? 'alt' : ''}">  
+                                                <td>${u.login}</td>
+                                                <td>${u.lastname}</td> 
+                                                <td>${u.firstname}</td>                                            
+
+                                                <td><input type="checkbox" value="${u.id}" name="id" id="check"/></td>
+                                                <!-- On compte le nombre de users -->  
+                                                <c:set var="total" value="${total+1}"/>  
+                                            </tr>  
+                                        </c:forEach>  
+
+                                        <!-- Affichage du solde total dans la dernière ligne du tableau -->  
+                                        <tr>
+                                            <td><b>TOTAL</b></td>
+                                            <td></td><td></td>
+                                            <td><b>${total}</b></td>
+                                        </tr>  
+                                    </table>  
+
+                                    <br /><br />
+                                    <input type="hidden" name="action" value="supprimerUnUtilisateur"/> 
+                                    <button type="submit" name="submit" class="btn btn-danger" id="btn" disabled="disabled">Supprimer l'utilisateur</button> 
+
+                                </form>
+                            </c:if>
                         </div>
                         <div class="tab-pane" id="ajouter">
                             <form class="form-horizontal" action="ServletUsers" method="get">
