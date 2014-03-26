@@ -43,7 +43,7 @@
 
                                     <label class="col-md-3 control-label"></label>
                                     <div class="col-md-4">
-                                        <input id="upload" name="uploaded" class="input-file" type="file">
+                                        <input id="upload" name="uploaded" class="input-file" type="file" accept=".csv">
                                     </div> 
                                     <div class="col-md-4">
                                         <button type="submit" name="submit" class='btn btn-success'>Uploader</button>
@@ -83,7 +83,7 @@
                                                 <td>${u.lastname}</td> 
                                                 <td>${u.firstname}</td>                                            
 
-                                                <td><input type="checkbox" value="${u.id}" name="id"/></td>
+                                                <td><input type="checkbox" value="${u.id}" name="id" id="checker"/></td>
                                                 <!-- On compte le nombre de users -->  
                                                 <c:set var="total" value="${total+1}"/>  
                                             </tr>  
@@ -100,9 +100,7 @@
                                     <c:if test="${currentPage != 1}">
                                         <td><a href="ServletUsers?action=listerLesUtilisateurs?page=${currentPage - 1}">Previous</a></td>
                                     </c:if>
-                                        
-                                        <p>${noOfPages}</p>
-                                    
+                                                                            
                                     <table border="1" cellpadding="5" cellspacing="5">
                                         <tr>
                                             <c:forEach begin="1" end="${noOfPages}" var="i">
@@ -125,7 +123,7 @@
 
                                     <br />
                                     <input type="hidden" name="action" value="supprimerUnUtilisateur"/> 
-                                    <button type="submit" name="submit" class="btn btn-danger">Supprimer l'utilisateur</button> 
+                                    <button type="submit" name="submit" class="btn btn-danger" disabled="disabled" id="btn">Supprimer l'utilisateur</button> 
 
                                 </form>
                             </c:if>  

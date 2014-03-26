@@ -15,7 +15,7 @@
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/bootstrap/css/bootstrap.min.css">
 
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/style.css" />  
-        
+
     </head>  
 
     <body>
@@ -29,6 +29,20 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.js" ></script>
+        <script type="text/javascript">
+            var checker = document.getElementById('checker');
+
+            var btn = document.getElementById('btn');
+            checker.onchange = function() {
+                if (this.checked) {
+               
+                    btn.disabled = false;
+                } else {
+                    btn.disabled = true;
+                }
+
+            }
+        </script>
         <script type="text/javascript">
             $('#myTab a').click(function(e) {
                 e.preventDefault()

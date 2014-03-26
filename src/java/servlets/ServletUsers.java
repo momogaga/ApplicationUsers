@@ -63,7 +63,6 @@ public class ServletUsers extends HttpServlet {
                 Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers((page - 1) * recordsPerPage,
                         recordsPerPage);
 
-                System.out.println(gestionnaireUtilisateurs.getNoOfRecords());
                 int noOfRecords = gestionnaireUtilisateurs.getNoOfRecords();
                 int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 

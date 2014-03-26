@@ -131,9 +131,7 @@ public class FileUpload extends HttpServlet {
                             item.write(uploadedFile);
                             FileReader fr = new FileReader(uploadedFile.getAbsolutePath());
                             this.createUser(fr, ';');
-                            Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();
-                            request.setAttribute("listeDesUsers", liste);
-                            forwardTo = "index.jsp?action=listerLesUtilisateurs";
+                            forwardTo = "index.jsp";
                             message = "Liste des utilisateurs";
                         } else {
                             out.println("file not found");

@@ -83,9 +83,8 @@ public class GestionnaireUtilisateurs {
     }
     
     public int getNoOfRecords() {
-        Query q = em.createQuery("select count(u) from Utilisateur u");
-        noOfRecords= (int) q.getSingleResult();
-        return noOfRecords;
+        Query q = em.createQuery("select u from Utilisateur u");
+        return q.getResultList().size();
     }
 
     public Boolean isUser(String login, String password) {
