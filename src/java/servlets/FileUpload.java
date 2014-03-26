@@ -10,9 +10,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,6 +26,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import utilisateurs.gestionnaires.GestionnaireUtilisateurs;
+import utilisateurs.modeles.Utilisateur;
 
 /**
  *
@@ -98,7 +101,8 @@ public class FileUpload extends HttpServlet {
             throws ServletException, IOException {
 
         String uploaded = request.getParameter("uploaded");
-
+        String forwardTo = "";
+        String message = "";
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
@@ -125,13 +129,19 @@ public class FileUpload extends HttpServlet {
                         System.out.println(uploadedFile.getAbsolutePath());
                         if (fileName != "") {
                             item.write(uploadedFile);
+                            FileReader fr = new FileReader(uploadedFile.getAbsolutePath());
+                            this.createUser(fr, ';');
+                            Collection<Utilisateur> liste = gestionnaireUtilisateurs.getAllUsers();
+                            request.setAttribute("listeDesUsers", liste);
+                            forwardTo = "index.jsp?action=listerLesUtilisateurs";
+                            message = "Liste des utilisateurs";
                         } else {
                             out.println("file not found");
+                            forwardTo = "/index.jsp";
+                            message = "Liste des utilisateurs";
                         }
-                        System.out.println(uploaded);
-                        FileReader fr = new FileReader(uploadedFile.getAbsolutePath());
-                        this.createUser(fr, ';');
-                        getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+                        RequestDispatcher dp = request.getRequestDispatcher(forwardTo);
+                        dp.forward(request, response);
                     } else {
                         String abc = item.getString();
                     }
