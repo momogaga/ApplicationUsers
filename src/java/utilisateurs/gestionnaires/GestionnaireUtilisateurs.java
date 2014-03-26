@@ -23,7 +23,7 @@ public class GestionnaireUtilisateurs {
     // à partir du contenu de persistence.xml
     @PersistenceContext
     private EntityManager em;
-     private int noOfRecords;
+    public int noOfRecords;
 
     public void creerUtilisateursDeTest() {
         creeUnUtilisateur("John", "Lennon", "jlennon", "root");
@@ -83,6 +83,8 @@ public class GestionnaireUtilisateurs {
     }
     
     public int getNoOfRecords() {
+        Query q = em.createQuery("select count(u) from Utilisateur u");
+        noOfRecords= (int) q.getSingleResult();
         return noOfRecords;
     }
 
