@@ -35,12 +35,10 @@
             var btn = document.getElementById('btn');
             checker.onchange = function() {
                 if (this.checked) {
-               
                     btn.disabled = false;
                 } else {
                     btn.disabled = true;
                 }
-
             }
         </script>
         <script type="text/javascript">

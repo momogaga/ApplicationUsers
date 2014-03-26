@@ -71,6 +71,7 @@
                                             <td><b>Login</b></td>  
                                             <td><b>Nom</b></td>  
                                             <td><b>Prénom</b></td>
+                                            <td><b></b></td>
                                         </tr>  
 
                                         <!-- Ici on affiche les lignes, une par utilisateur -->  
@@ -97,37 +98,32 @@
                                         </tr>  
                                     </table>  
 
-                                    <div>  
+                                    <ul class="pagination pagination-sm" style="margin: 0px">  
                                         <c:if test="${currentPage != 1}">
-                                            <td><a href="ServletUsers?action=listerLesUtilisateurs&page=${currentPage - 1}">Previous</a></td>
-                                        </c:if>
+                                            <li><a href="ServletUsers?action=listerLesUtilisateurs&page=${currentPage - 1}">Previous</a></li>
+                                            </c:if>
+
+                                        <c:forEach begin="1" end="${noOfPages}" var="i">
+                                            <c:choose>
+                                                <c:when test="${currentPage eq i}">
+                                                    <li></li>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                    <li><a href="ServletUsers?action=listerLesUtilisateurs&page=${i}">${i}</a></li>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
+
+
                                         <%--For displaying Next link --%>
                                         <c:if test="${currentPage lt noOfPages}">
-                                            <td><a href="ServletUsers?action=listerLesUtilisateurs&page=${currentPage + 1}">Next</a></td>
-                                        </c:if>    
+                                            <li><a href="ServletUsers?action=listerLesUtilisateurs&page=${currentPage + 1}">Next</a></li>
+                                            </c:if>  
+                                    </ul>
 
-
-                                        <table class="table">
-                                            <tr>
-                                                <c:forEach begin="1" end="${noOfPages}" var="i">
-                                                    <c:choose>
-                                                        <c:when test="${currentPage eq i}">
-                                                            <td>${i}</td>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <td><a href="ServletUsers?action=listerLesUtilisateurs&page=${i}">${i}</a></td>
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </c:forEach>
-                                            </tr>
-                                        </table>
-
-
-                                    </div>
-
-                                    <br />
+                                    <br /><br />
                                     <input type="hidden" name="action" value="supprimerUnUtilisateur"/> 
-                                    <button type="submit" name="submit" class="btn btn-danger" disabled="disabled" id="btn">Supprimer l'utilisateur</button> 
+                                    <button type="submit" name="submit" class="btn btn-danger" id="btn">Supprimer l'utilisateur</button> 
 
                                 </form>
                             </c:if>  

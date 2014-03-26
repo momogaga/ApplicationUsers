@@ -23,7 +23,6 @@ public class GestionnaireUtilisateurs {
     // à partir du contenu de persistence.xml
     @PersistenceContext
     private EntityManager em;
-    public int noOfRecords;
 
     public void creerUtilisateursDeTest() {
         creeUnUtilisateur("John", "Lennon", "jlennon", "root");
@@ -73,16 +72,17 @@ public class GestionnaireUtilisateurs {
         return q.getResultList();
     }
 
-    public Collection<Utilisateur> getAllUsers(int offset, int noOfRecords) {
+    public Collection<Utilisateur> getAllUsers(int decalage, int elements) {
         // Exécution d'une requête équivalente à un select *
         Query q = em.createQuery("select u from Utilisateur u");
-        q.setMaxResults(noOfRecords);
-        q.setFirstResult(offset);
+
+        q.setFirstResult(decalage);
+        q.setMaxResults(elements);
 
         return q.getResultList();
     }
-    
-    public int getNoOfRecords() {
+
+    public int getElements() {
         Query q = em.createQuery("select u from Utilisateur u");
         return q.getResultList().size();
     }
