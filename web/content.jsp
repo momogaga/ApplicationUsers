@@ -86,33 +86,33 @@
                                             <td><b>${total}</b></td>
                                         </tr>  
                                     </table>  
+                                    <div style="text-align: center">
+                                        <ul class="pagination pagination-sm" style="margin: 0px;">  
+                                            <c:if test="${currentPage != 1}">
+                                                <li><a href="ServletUsers?action=listerLesUtilisateurs&page=${currentPage - 1}">Previous</a></li>
+                                                </c:if>
 
-                                    <ul class="pagination pagination-sm" style="margin: 0px">  
-                                        <c:if test="${currentPage != 1}">
-                                            <li><a href="ServletUsers?action=listerLesUtilisateurs&page=${currentPage - 1}">Previous</a></li>
-                                            </c:if>
-
-                                        <c:forEach begin="1" end="${noOfPages}" var="i">
-                                            <c:choose>
-                                                <c:when test="${currentPage eq i}">
-                                                    <li></li>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                    <li><a href="ServletUsers?action=listerLesUtilisateurs&page=${i}">${i}</a></li>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </c:forEach>
+                                            <c:forEach begin="1" end="${noOfPages}" var="i">
+                                                <c:choose>
+                                                    <c:when test="${currentPage eq i}">
+                                                        <li></li>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                        <li><a href="ServletUsers?action=listerLesUtilisateurs&page=${i}">${i}</a></li>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </c:forEach>
 
 
-                                        <%--For displaying Next link --%>
-                                        <c:if test="${currentPage lt noOfPages}">
-                                            <li><a href="ServletUsers?action=listerLesUtilisateurs&page=${currentPage + 1}">Next</a></li>
-                                            </c:if>  
-                                    </ul>
-
+                                            <%--For displaying Next link --%>
+                                            <c:if test="${currentPage lt noOfPages}">
+                                                <li><a href="ServletUsers?action=listerLesUtilisateurs&page=${currentPage + 1}">Next</a></li>
+                                                </c:if>  
+                                        </ul>
+                                    </div>
                                     <br /><br />
                                     <input type="hidden" name="action" value="supprimerUnUtilisateur"/> 
-                                    <button type="submit" name="submit" class="btn btn-danger" id="btn" disabled="disabled">Supprimer l'utilisateur</button> 
+                                    <button type="submit" name="submit" class="btn btn-danger" id="btn">Supprimer l'utilisateur</button> 
 
                                 </form>
                             </c:if>  
