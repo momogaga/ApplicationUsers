@@ -57,7 +57,7 @@ public class ServletUsers extends HttpServlet {
         String password = request.getParameter("password");
 
         int page = 1;
-        int elementsParPage = 5;
+        int elementsParPage = 10;
 
         if (action != null) {
             if(action.equals("listerLeUtilisateur")){
